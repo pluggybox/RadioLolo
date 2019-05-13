@@ -2,7 +2,8 @@
 import os
 import pickle
 
-INDEX_RADIO = "Index Radio"
+CLE_INDEX_RADIO = "Index Radio"
+CLE_VOLUME = 'Volume'
 
 class PersistantParameters():
 
@@ -13,7 +14,8 @@ class PersistantParameters():
 
     def _creer_fichier_par_defaut(self):
         self.parametres= {
-            INDEX_RADIO: 0
+            CLE_INDEX_RADIO: 0,
+            CLE_VOLUME: 77,
         }
         self._sauver()
 

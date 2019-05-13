@@ -44,7 +44,7 @@ def _HTTP_services():
         code_HTML_liste_radios += '>' + nom_radio + '</option>'
         index_radio += 1
 
-    return render_template('index.html', nom_de_la_page=SERVER_NAME, liste_stations=code_HTML_liste_radios.strip(), volume=player.lire_volume())
+    return render_template('index.html', nom_de_la_page=SERVER_NAME, liste_stations=code_HTML_liste_radios.strip(), volume='Volume: %d%%' % (player.lire_volume()))
 
 #=======================================================================================================================
 class WebServer():
