@@ -49,7 +49,7 @@ class MusicPlayer():
         if(offset > 0):
             str_offset = '+%d'%(offset)
         self._run_command(['volume', str_offset])
-        self.volume = int(self._run_command(['volume']).split(':')[1])
+        self.volume = int(self._run_command(['volume']).split(':')[1].split('%')[0])
         self.parametres[CLE_VOLUME] = self.volume
         self.fichier_parametres.ecrire(self.parametres)
 
