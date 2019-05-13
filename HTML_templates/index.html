@@ -1,0 +1,16 @@
+<!doctype html>
+<head>
+<title>{{ nom_de_la_page }}</title>
+</head>
+<body>
+
+<h1>{{ nom_de_la_page }}</h1>
+
+<form role="form" method='POST' action='/'>
+    <select name='station'>{{ liste_stations|safe }}"></select>
+	<input type="submit" name="submit" value="Lire"/>
+    <br>
+	<input type="submit" name="submit" value="-" /> {{ volume }}
+	<input type="submit" name="submit" value="+" />
+</form>
+</body>
