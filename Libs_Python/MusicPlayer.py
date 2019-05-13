@@ -8,7 +8,7 @@ from PersistantParameters import PersistantParameters, INDEX_RADIO
 #=======================================================================================================================
 if(platform.system() == 'Linux'):
     MPC_COMMAND = 'mpc'
-    PARAMETER_FILE = '/boot/parameters.cfg'
+    PARAMETER_FILE = '/mnt/clef_USB/parameters.cfg'
 else:
     MPC_COMMAND = 'mpc.bat'
     PARAMETER_FILE = r'C:\Users\Public\parameters.cfg'
@@ -22,7 +22,7 @@ class MusicPlayer():
         self.parametres = self.fichier_parametres.lire()
         self.index_lecture_en_cours = self.parametres[INDEX_RADIO]
         self._run_command(['clear'])
-	self.play(self.index_lecture_en_cours)
+        self.play(self.index_lecture_en_cours)
 
     def _run_command(self, command):
         cmd = [MPC_COMMAND] + command
