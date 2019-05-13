@@ -54,6 +54,7 @@ class WebServer():
         liste_radios = gestionnaire_liste_radios
         for nom_radio, url_radio in liste_radios.radios():
             player.add(url_radio)
+        player.play(player.index_lecture())
 
     def run(self):
         app.run(host='0.0.0.0', port=SERVER_PORT, debug=MODE_DEBUG)

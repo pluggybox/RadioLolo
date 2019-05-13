@@ -20,9 +20,7 @@ class MusicPlayer():
     def __init__(self):
         self.fichier_parametres = PersistantParameters(PARAMETER_FILE)
         self.parametres = self.fichier_parametres.lire()
-        self.index_lecture_en_cours = self.parametres[INDEX_RADIO]
         self._run_command(['clear'])
-        self.play(self.index_lecture_en_cours)
 
     def _run_command(self, command):
         cmd = [MPC_COMMAND] + command
