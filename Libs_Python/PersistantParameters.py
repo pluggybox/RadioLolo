@@ -4,6 +4,7 @@ import pickle
 
 CLE_INDEX_RADIO = "Index Radio"
 CLE_VOLUME = 'Volume'
+CLE_SOURCE = 'Source'
 
 class PersistantParameters():
 
@@ -16,6 +17,7 @@ class PersistantParameters():
         self.parametres= {
             CLE_INDEX_RADIO: 0,
             CLE_VOLUME: 77,
+            CLE_SOURCE: 'Web'
         }
         self._sauver()
 

@@ -1,7 +1,8 @@
 # -*- coding: iso-8859-1 -*-
+import os
 import subprocess
 import platform
-from PersistantParameters import PersistantParameters, CLE_INDEX_RADIO, CLE_VOLUME
+from PersistantParameters import PersistantParameters, CLE_INDEX_RADIO, CLE_VOLUME, CLE_SOURCE
 
 #=======================================================================================================================
 #                           C O N S T A N T E S
@@ -9,9 +10,11 @@ from PersistantParameters import PersistantParameters, CLE_INDEX_RADIO, CLE_VOLU
 if(platform.system() == 'Linux'):
     MPC_COMMAND = 'mpc'
     PARAMETER_FILE = '/mnt/clef_USB/parameters.cfg'
+    DIR_MP3_FILES = '/mnt/clef_USB/MP3/'
 else:
     MPC_COMMAND = 'mpc.bat'
     PARAMETER_FILE = r'C:\Users\Public\parameters.cfg'
+    DIR_MP3_FILES = r'C:\Users\Public\MP3\\'
 
 #=======================================================================================================================
 
@@ -23,6 +26,7 @@ class MusicPlayer():
         self._run_command(['clear'])
         self.volume = self.parametres[CLE_VOLUME]
         self._run_command(['volume', str(self.volume)])
+        self.liste_fichiers_MP3()
 
     def _run_command(self, command):
         cmd = [MPC_COMMAND] + command
@@ -33,6 +37,7 @@ class MusicPlayer():
         self._run_command(['add', url])
 
     def play(self, index_radio):
+        print 'index_radio: ', index_radio
         self.parametres[CLE_INDEX_RADIO] = int(index_radio)
         self.fichier_parametres.ecrire(self.parametres)
         numero_radio = int(index_radio) + 1
@@ -53,6 +58,23 @@ class MusicPlayer():
         self.parametres[CLE_VOLUME] = self.volume
         self.fichier_parametres.ecrire(self.parametres)
 
-
     def lire_volume(self):
         return self.volume
+
+    def lire_source_lecture(self):
+        return self.parametres[CLE_SOURCE]
+
+    def lire_source_lecture(self, source):
+        self.parametres[CLE_SOURCE] = source
+        self.fichier_parametres.ecrire(self.parametres)
+
+    def liste_fichiers_MP3(self):
+        liste_fichiers = []
+        filtre_extension = (".wav", ".mp3")
+        for root, dirs, files in os.walk(DIR_MP3_FILES):
+            for file in files:
+                if file.lower().endswith(tuple(filtre_extension)):
+                    nom_acces = os.path.join(root, file)
+                    nom_affichage = nom_acces.replace(DIR_MP3_FILES, '')
+                    liste_fichiers.append((nom_acces, nom_affichage))
+        return liste_fichiers
