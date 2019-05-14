@@ -69,7 +69,7 @@ class WebServer():
         #for nom_radio, url_radio in liste_radios.radios():
         #    player.add(url_radio)
         for nom_acces, nom_affichage in liste_fichiers_MP3:
-            player.add(nom_acces)
+            player.add('file://' + nom_acces)
         player.play(player.index_lecture())
 
     def run(self):
