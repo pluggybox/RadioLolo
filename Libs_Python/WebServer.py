@@ -88,15 +88,14 @@ def traitement_MP3():
 
 def changer_source_musique(source):
     global liste_radios, liste_fichiers_MP3
-
+    player.clear()
     if(source == 'Web'):
-        player.clear()
         for nom_radio, url_radio in liste_radios.radios():
             player.add(url_radio)
     else:
-        player.clear()
         for nom_acces, nom_affichage in liste_fichiers_MP3:
             player.add('file://' + nom_acces)
+    player.play(player.index_lecture())
 
 #=======================================================================================================================
 class WebServer():
