@@ -95,7 +95,7 @@ def changer_source_musique(source):
     else:
         for nom_acces, nom_affichage in liste_fichiers_MP3:
             player.add('file://' + nom_acces)
-    player.play(player.index_lecture())
+    player.play(0)
 
 #=======================================================================================================================
 class WebServer():
