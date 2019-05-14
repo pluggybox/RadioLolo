@@ -1,18 +1,27 @@
 <!doctype html>
 
 <head>
-    <title>{{ nom_de_la_page }}</title>
+    <meta name="viewport" content="user-scalable=no,width=device-width" />
+    <title>{{ nom_de_la_page }} {{ mode_DEBUG }}</title>
 </head>
 
 <body>
-    <h1>{{ nom_de_la_page }}</h1>
+    <h1>{{ nom_de_la_page }} {{ mode_DEBUG }}</h1>
 
     <form role="form" method='POST' action='/'>
+
+        Source:
+        <input type="radio" name="Source" value="Web" {{ etat_source_WEB }}>Web
+        <input type="radio" name="Source" value="MP3" {{ etat_source_MP3 }}>MP3
+        <input type="submit" name="submit" value="Changer" />
+        <br>
         <select name='station'>{{ liste_stations|safe }}"></select>
         <input type="submit" name="submit" value="Lire"/>
         <br>
         <input type="submit" name="submit" value="-" /> {{ volume }}
         <input type="submit" name="submit" value="+" />
+        <br>
+        <input type="submit" name="submit" value="Sauver les paramètres" />
     </form>
 
 </body>

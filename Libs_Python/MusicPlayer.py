@@ -23,10 +23,9 @@ class MusicPlayer():
     def __init__(self):
         self.fichier_parametres = PersistantParameters(PARAMETER_FILE)
         self.parametres = self.fichier_parametres.lire()
-        self._run_command(['clear'])
+        self.clear()
         self.volume = self.parametres[CLE_VOLUME]
         self._run_command(['volume', str(self.volume)])
-        self.liste_fichiers_MP3()
 
     def _run_command(self, command):
         cmd = [MPC_COMMAND] + command
@@ -36,10 +35,12 @@ class MusicPlayer():
     def add(self, url):
         self._run_command(['add', url])
 
+    def clear(self):
+        self._run_command(['clear'])
+
     def play(self, index_radio):
         print 'index_radio: ', index_radio
         self.parametres[CLE_INDEX_RADIO] = int(index_radio)
-        self.fichier_parametres.ecrire(self.parametres)
         numero_radio = int(index_radio) + 1
         self._run_command(['play', str(numero_radio)])
 
@@ -56,7 +57,6 @@ class MusicPlayer():
         self._run_command(['volume', str_offset])
         self.volume = int(self._run_command(['volume']).split(':')[1].split('%')[0])
         self.parametres[CLE_VOLUME] = self.volume
-        self.fichier_parametres.ecrire(self.parametres)
 
     def lire_volume(self):
         return self.volume
@@ -64,9 +64,8 @@ class MusicPlayer():
     def lire_source_lecture(self):
         return self.parametres[CLE_SOURCE]
 
-    def lire_source_lecture(self, source):
+    def changer_source_lecture(self, source):
         self.parametres[CLE_SOURCE] = source
-        self.fichier_parametres.ecrire(self.parametres)
 
     def liste_fichiers_MP3(self):
         liste_fichiers = []
@@ -78,3 +77,6 @@ class MusicPlayer():
                     nom_affichage = nom_acces.replace(DIR_MP3_FILES, '')
                     liste_fichiers.append((nom_acces, nom_affichage))
         return liste_fichiers
+
+    def sauver_parametres(self):
+        self.fichier_parametres.ecrire(self.parametres)
