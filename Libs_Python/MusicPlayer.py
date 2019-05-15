@@ -29,6 +29,7 @@ class MusicPlayer():
 
     def _run_command(self, command):
         cmd = [MPC_COMMAND] + command
+        print cmd
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
         return p.stdout.read()
 
