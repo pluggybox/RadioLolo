@@ -58,8 +58,9 @@ class MusicPlayer():
         self.volume = int(self._run_command(['volume']).split(':')[1].split('%')[0])
         self.parametres[CLE_VOLUME] = self.volume
 
-    def changer_volume(self, str_volume):
-        print str_volume
+    def changer_volume(self, volume):
+        self.parametres[CLE_VOLUME] = self.volume
+        self._run_command(['volume', self.volume])
 
     def lire_volume(self):
         return self.volume

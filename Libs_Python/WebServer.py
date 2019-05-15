@@ -9,7 +9,7 @@ import platform
 #=======================================================================================================================
 SERVER_NAME = 'RadioLolo'
 
-MODE_DEBUG  = True
+MODE_DEBUG  = False
 
 if(platform.system() == 'Linux'):
     SERVER_PORT = 80
