@@ -1,0 +1,17 @@
+body
+{
+    font-family:verdana, sans-serif;
+    font-size:150%;
+    color:#592264
+}
+
+
+input[type="submit"], input[type="button"]
+{
+  font-size: 20px;
+}
+
+select
+{
+  font-size: 20px;
+}

@@ -9,7 +9,7 @@ import platform
 #=======================================================================================================================
 SERVER_NAME = 'RadioLolo'
 
-MODE_DEBUG  = False
+MODE_DEBUG  = True
 
 if(platform.system() == 'Linux'):
     SERVER_PORT = 80
@@ -29,13 +29,14 @@ liste_fichiers_MP3 = None
 def _HTTP_services():
     traitement_methode_POST()
     source = player.lire_source_lecture()
-    etat_source_WEB = ''
-    etat_source_MP3 = ''
+    print 'Source', source
+    image_WEB = '/static/logo_WEB.jpg'
+    image_MP3 = '/static/logo_MP3.jpg'
     if(source == 'Web'):
-        etat_source_WEB = 'checked'
+        image_WEB = '/static/logo_WEB_valide.jpg'
         code_HTML_liste = traitement_WEB()
     else:
-        etat_source_MP3 = 'checked'
+        image_MP3 = '/static/logo_MP3_valide.jpg'
         code_HTML_liste = traitement_MP3()
 
     str_mode_debug = ''
@@ -44,24 +45,31 @@ def _HTTP_services():
 
     return render_template('index.html', nom_de_la_page=SERVER_NAME, liste_stations=code_HTML_liste.strip(),
                            volume='Volume: %d%%' % (player.lire_volume()),
-                           etat_source_WEB=etat_source_WEB,
-                           etat_source_MP3=etat_source_MP3,
-                           mode_DEBUG = str_mode_debug)
+                           mode_DEBUG=str_mode_debug,
+                           image_WEB=image_WEB,
+                           image_MP3=image_MP3)
 
 def traitement_methode_POST():
+    print request
+    print request.form
+    print request.form.keys()
+
     if request.method == 'POST':
-        if request.form['submit'] == 'Lire':
-            player.play(str(request.form['station']))
-        elif request.form['submit'] == '+':
-            player.modifier_volume(5)
-        elif request.form['submit'] == '-':
-            player.modifier_volume(-5)
-        elif request.form['submit'] == 'Changer':
-            source = str(request.form['Source'])
-            changer_source_musique(source)
-            player.changer_source_lecture(source)
-        elif request.form['submit'] == u"Sauver les paramètres":
-            player.sauver_parametres()
+        if 'submit' in request.form.keys():
+            if request.form['submit'] == 'Lire':
+                player.play(str(request.form['station']))
+            elif request.form['submit'] == '+':
+                player.modifier_volume(5)
+            elif request.form['submit'] == '-':
+                player.modifier_volume(-5)
+            elif request.form['submit'] == u"Sauver les paramètres":
+                player.sauver_parametres()
+        if 'Bouton_MP3.x' in request.form.keys():
+            changer_source_musique('MP3')
+            player.changer_source_lecture('MP3')
+        if 'Bouton_WEB.x' in request.form.keys():
+            changer_source_musique('Web')
+            player.changer_source_lecture('Web')
 
 def traitement_WEB():
     code_HTML_liste = ''
