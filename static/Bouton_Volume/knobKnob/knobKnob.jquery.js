@@ -100,6 +100,8 @@
 		
 					knobTop.css('transform','rotate('+(currentDeg)+'deg)');
 					options.turn(currentDeg/359);
+
+					document.getElementById("volume").innerHTML = Math.round((100*currentDeg)/359.0) +'%';
 				});
 			
 				doc.on('mouseup.rem  touchend.rem',function(){
@@ -111,6 +113,10 @@
 					
 					// Marking the starting degree as invalid
 					startDeg = -1;
+
+					//document.getElementById("myForm").submit();
+					document.getElementById("changer_volume").value = currentDeg;
+					document.getElementById("changer_volume").click()
 				});
 			
 			});

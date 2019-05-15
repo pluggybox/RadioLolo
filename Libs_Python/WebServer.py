@@ -49,14 +49,22 @@ def _HTTP_services():
                            image_MP3=image_MP3)
 
 def traitement_methode_POST():
+    print request
+    print request.form
+    print request.form.keys()
     if request.method == 'POST':
-        if 'submit' in request.form.keys():
-            if request.form['submit'] == '+':
+        if 'appui_bouton' in request.form.keys():
+            print request.form['appui_bouton']
+            if request.form['appui_bouton'] == '+':
                 player.modifier_volume(5)
-            elif request.form['submit'] == '-':
+            elif request.form['appui_bouton'] == '-':
                 player.modifier_volume(-5)
-            elif request.form['submit'] == u"Sauver les paramètres":
+            elif request.form['appui_bouton'] == u"Sauver les paramètres":
                 player.sauver_parametres()
+
+        if 'changer_volume' in request.form.keys():
+            player.changer_volume(request.form['changer_volume'])
+
         if 'Bouton_MP3.x' in request.form.keys():
             changer_source_musique('MP3')
             player.changer_source_lecture('MP3')

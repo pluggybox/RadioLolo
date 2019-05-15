@@ -32,7 +32,7 @@ $(function(){
 	
 	$('#control').knobKnob({
 		snap : 10,
-		value: 154,
+		value: 0,
 		turn : function(ratio){
 			numBars = Math.round(colorBars.length*ratio);
 			
