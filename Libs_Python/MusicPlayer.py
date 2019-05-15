@@ -59,6 +59,7 @@ class MusicPlayer():
         self.parametres[CLE_VOLUME] = self.volume
 
     def changer_volume(self, volume):
+        self.volume = volume
         self.parametres[CLE_VOLUME] = self.volume
         self._run_command(['volume', self.volume])
 
