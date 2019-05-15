@@ -3,22 +3,45 @@
 <head>
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" />
     <title>{{ nom_de_la_page }} {{ mode_DEBUG }}</title>
+
+    <link rel="stylesheet" href="/static/Bouton_Volume/knobKnob/knobKnob.css" />
+
 </head>
 
 <body>
-    <h2>{{ nom_de_la_page }} {{ mode_DEBUG }}</h2>
+    <center>
+        <h1>{{ nom_de_la_page }} {{ mode_DEBUG }}</h1>
 
-    <form role="form" method='POST' action='/'>
-        <input type="image" name="Bouton_WEB" src={{image_WEB}}>
-        <input type="image" name="Bouton_MP3" src={{image_MP3}}>
-        <br>
-        <select name='station'>{{ liste_stations|safe }}"></select>
-        <input type="submit" name="submit" value="Lire"/>
-        <br>
-        <input type="submit" name="submit" value="-" /> {{ volume }}
-        <input type="submit" name="submit" value="+" />
-        <br>
-        <input type="submit" name="submit" value="Sauver les paramètres" />
-    </form>
+        <form id="myForm" name="myForm" role="form" method='POST' action='/'>
+            <input type="image" name="Bouton_WEB" src={{image_WEB}}>
+            <input type="image" name="Bouton_MP3" src={{image_MP3}}>
+            <br>
+            <br>
+
+            <table>
+                <tr>
+                    <td><select name='station'>{{ liste_stations|safe }}"></select></td>
+                    <td><input type="image" name="Play" src='/static/play.jpg'></td>
+                </tr>
+            </table>
+
+
+            <br>
+            <br>
+            <input type="submit" name="submit" value="-" /> {{ volume }}
+            <input type="submit" name="submit" value="+" />
+            <br>
+            <br>
+            <div id="control"></div>
+            <br>
+            <br>
+            <input type="submit" name="submit" value="Sauver les paramètres" />
+        </form>
+    </center>
+
+	<script src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script src="/static/Bouton_Volume/knobKnob/transform.js"></script>
+	<script src="/static/Bouton_Volume/knobKnob/knobKnob.jquery.js"></script>
+	<script src="/static/Bouton_Volume/js/script.js"></script>
 
 </body>

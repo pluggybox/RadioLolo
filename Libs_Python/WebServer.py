@@ -29,7 +29,6 @@ liste_fichiers_MP3 = None
 def _HTTP_services():
     traitement_methode_POST()
     source = player.lire_source_lecture()
-    print 'Source', source
     image_WEB = '/static/logo_WEB.jpg'
     image_MP3 = '/static/logo_MP3.jpg'
     if(source == 'Web'):
@@ -50,15 +49,9 @@ def _HTTP_services():
                            image_MP3=image_MP3)
 
 def traitement_methode_POST():
-    print request
-    print request.form
-    print request.form.keys()
-
     if request.method == 'POST':
         if 'submit' in request.form.keys():
-            if request.form['submit'] == 'Lire':
-                player.play(str(request.form['station']))
-            elif request.form['submit'] == '+':
+            if request.form['submit'] == '+':
                 player.modifier_volume(5)
             elif request.form['submit'] == '-':
                 player.modifier_volume(-5)
@@ -70,6 +63,8 @@ def traitement_methode_POST():
         if 'Bouton_WEB.x' in request.form.keys():
             changer_source_musique('Web')
             player.changer_source_lecture('Web')
+        if 'Play.x' in request.form.keys():
+            player.play(str(request.form['station']))
 
 def traitement_WEB():
     code_HTML_liste = ''
