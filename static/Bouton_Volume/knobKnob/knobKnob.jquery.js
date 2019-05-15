@@ -115,7 +115,7 @@
 					startDeg = -1;
 
 					//document.getElementById("myForm").submit();
-					document.getElementById("changer_volume").value = currentDeg;
+					document.getElementById("changer_volume").value = Math.round((100*currentDeg)/359.0);
 					document.getElementById("changer_volume").click()
 				});
 			

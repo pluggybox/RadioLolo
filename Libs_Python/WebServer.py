@@ -50,8 +50,8 @@ def _HTTP_services():
 
 def traitement_methode_POST():
     if request.method == 'POST':
+        print request.form.keys()
         if 'appui_bouton' in request.form.keys():
-            print request.form['appui_bouton']
             if request.form['appui_bouton'] == '+':
                 player.modifier_volume(5)
             elif request.form['appui_bouton'] == '-':
@@ -60,6 +60,7 @@ def traitement_methode_POST():
                 player.sauver_parametres()
 
         if 'changer_volume' in request.form.keys():
+            print request.form['changer_volume']
             player.changer_volume(request.form['changer_volume'])
 
         if 'Bouton_MP3.x' in request.form.keys():

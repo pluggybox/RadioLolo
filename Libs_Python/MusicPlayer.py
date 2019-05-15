@@ -29,7 +29,7 @@ class MusicPlayer():
 
     def _run_command(self, command):
         cmd = [MPC_COMMAND] + command
-        print cmd
+        print 'cmd: ', cmd
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
         return p.stdout.read()
 
@@ -60,7 +60,7 @@ class MusicPlayer():
         self.parametres[CLE_VOLUME] = self.volume
 
     def changer_volume(self, volume):
-        self.volume = volume
+        self.volume = int(volume)
         self.parametres[CLE_VOLUME] = self.volume
         self._run_command(['volume', str(self.volume)])
 
