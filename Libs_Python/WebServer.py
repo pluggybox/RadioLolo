@@ -49,9 +49,6 @@ def _HTTP_services():
                            image_MP3=image_MP3)
 
 def traitement_methode_POST():
-    print request
-    print request.form
-    print request.form.keys()
     if request.method == 'POST':
         if 'appui_bouton' in request.form.keys():
             print request.form['appui_bouton']

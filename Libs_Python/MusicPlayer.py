@@ -61,7 +61,7 @@ class MusicPlayer():
     def changer_volume(self, volume):
         self.volume = volume
         self.parametres[CLE_VOLUME] = self.volume
-        self._run_command(['volume', self.volume])
+        self._run_command(['volume', str(self.volume)])
 
     def lire_volume(self):
         return self.volume
