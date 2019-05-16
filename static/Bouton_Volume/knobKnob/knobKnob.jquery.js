@@ -5,15 +5,20 @@
  * @url			http://tutorialzine.com/2011/11/pretty-switches-css3-jquery/
  * @license		MIT License
  */
+$(function(){
+
+	$('#control').knobKnob({
+		value: VALEUR_DEPART_BOUTON,
+	});
+
+});
 
 (function($){
 	
 	$.fn.knobKnob = function(props){
 	
 		var options = $.extend({
-			snap: 0,
-			value: 0,
-			turn: function(){}
+			value: 0
 		}, props || {});
 	
 		var tpl = '<div class="knob">\
@@ -37,11 +42,9 @@
 			if(options.value > 0 && options.value <= 359){
 				rotation = currentDeg = options.value;
 				knobTop.css('transform','rotate('+(currentDeg)+'deg)');
-				options.turn(currentDeg/359);
 			}
 			
 			knob.on('mousedown touchstart', function(e){
-			
 				e.preventDefault();
 			
 				var offset = knob.offset();
@@ -83,12 +86,7 @@
 					else if(tmp > 359){
 						tmp = tmp % 360;
 					}
-					
-					// Snapping in the off position:
-					if(options.snap && tmp < options.snap){
-						tmp = 0;
-					}
-					
+
 					// This would suggest we are at an end position;
 					// we need to block further rotation.
 					if(Math.abs(tmp - lastDeg) > 180){
@@ -97,9 +95,12 @@
 					
 					currentDeg = tmp;
 					lastDeg = tmp;
+
+                    console.log("startDeg: " + startDeg);
+                    console.log("rotation: " + rotation);
+					console.log("currentDeg: " + currentDeg);
 		
 					knobTop.css('transform','rotate('+(currentDeg)+'deg)');
-					options.turn(currentDeg/359);
 
 					document.getElementById("volume").innerHTML = Math.round((100*currentDeg)/359.0) +'%';
 				});

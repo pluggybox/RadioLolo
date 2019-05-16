@@ -1,12 +1,15 @@
 /*----------------------------
 	knobKnob Styles
 -----------------------------*/
+
+/* ?? mais necessaire au bon positionnement de l'ensemble*/
 .knob{
 	width:  200px;
 	height:  200px;
 	position:relative;
 }
 
+/* Image du bouton */
 .knob .top{
 	position:absolute;
 	top:0;
@@ -18,6 +21,7 @@
 	cursor:default !important;
 }
 
+/* Ombre sous le bouton */
 .knob .base{
 	width:  200px;
 	height:  200px;
@@ -29,6 +33,7 @@
 	z-index:1;
 }
 
+/*Point noir qui tourne avec le bouton*/
 .knob .top:after{
 	content:'';
 	width:10px;
@@ -41,10 +46,4 @@
 	border-radius: 50%;
 	cursor:default !important;
 	box-shadow: 0 0 1px #5a5a5a inset;
-}
-
-.knob [draggable] {
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
 }
