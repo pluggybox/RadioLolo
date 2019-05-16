@@ -1,11 +1,9 @@
 /*----------------------------
 	knobKnob Styles
 -----------------------------*/
-
-
 .knob{
-	width:83px;
-	height:83px;
+	width:  200px;
+	height:  200px;
 	position:relative;
 }
 
@@ -13,16 +11,16 @@
 	position:absolute;
 	top:0;
 	left:0;
-	width:83px;
-	height:83px;
+	width:  200px;
+	height:  200px;
 	background:url('knob.png') no-repeat;
 	z-index:10;
 	cursor:default !important;
 }
 
 .knob .base{
-	width:83px;
-	height:83px;
+	width:  200px;
+	height:  200px;
 	border-radius:50%;
 	box-shadow:0 5px 0 #4a5056,5px 5px 5px #000;
 	position:absolute;

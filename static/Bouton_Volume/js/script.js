@@ -32,7 +32,7 @@ $(function(){
 	
 	$('#control').knobKnob({
 		snap : 10,
-		value: 0,
+		value: VALEUR_DEPART_BOUTON,
 		turn : function(ratio){
 			numBars = Math.round(colorBars.length*ratio);
 			
@@ -45,8 +45,6 @@ $(function(){
 			lastNum = numBars;
 			
 			colorBars.removeClass('active').slice(0, numBars).addClass('active');
-
-			//document.getElementById("myForm").submit();
 		}
 	});
 	

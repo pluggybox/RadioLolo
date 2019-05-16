@@ -28,29 +28,35 @@ liste_fichiers_MP3 = None
 @app.route('/', methods=['GET', 'POST'])
 def _HTTP_services():
     traitement_methode_POST()
-    source = player.lire_source_lecture()
-    image_WEB = '/static/logo_WEB.jpg'
-    image_MP3 = '/static/logo_MP3.jpg'
-    if(source == 'Web'):
-        image_WEB = '/static/logo_WEB_valide.jpg'
-        code_HTML_liste = traitement_WEB()
-    else:
-        image_MP3 = '/static/logo_MP3_valide.jpg'
-        code_HTML_liste = traitement_MP3()
+    code_HTML_liste, image_MP3, image_WEB = traitement_source()
 
     str_mode_debug = ''
-    if MODE_DEBUG is True :
+    if MODE_DEBUG is True:
         str_mode_debug = '(DEBUG)'
 
     return render_template('index.html', nom_de_la_page=SERVER_NAME, liste_stations=code_HTML_liste.strip(),
                            volume='Volume: %d%%' % (player.lire_volume()),
                            mode_DEBUG=str_mode_debug,
                            image_WEB=image_WEB,
-                           image_MP3=image_MP3)
+                           image_MP3=image_MP3,
+                           valeur_du_bouton = player.lire_volume())
+
+
+def traitement_source():
+    source = player.lire_source_lecture()
+    image_WEB = '/static/logo_WEB.jpg'
+    image_MP3 = '/static/logo_MP3.jpg'
+    if (source == 'Web'):
+        image_WEB = '/static/logo_WEB_valide.jpg'
+        code_HTML_liste = traitement_WEB()
+    else:
+        image_MP3 = '/static/logo_MP3_valide.jpg'
+        code_HTML_liste = traitement_MP3()
+    return code_HTML_liste, image_MP3, image_WEB
+
 
 def traitement_methode_POST():
     if request.method == 'POST':
-        print request.form.keys()
         if 'appui_bouton' in request.form.keys():
             if request.form['appui_bouton'] == '+':
                 player.modifier_volume(5)
@@ -59,17 +65,16 @@ def traitement_methode_POST():
             elif request.form['appui_bouton'] == u"Sauver les paramètres":
                 player.sauver_parametres()
 
-        if 'changer_volume' in request.form.keys():
-            print request.form['changer_volume']
+        elif 'changer_volume' in request.form.keys():
             player.changer_volume(request.form['changer_volume'])
 
-        if 'Bouton_MP3.x' in request.form.keys():
+        elif 'Bouton_MP3.x' in request.form.keys():
             changer_source_musique('MP3')
             player.changer_source_lecture('MP3')
-        if 'Bouton_WEB.x' in request.form.keys():
+        elif 'Bouton_WEB.x' in request.form.keys():
             changer_source_musique('Web')
             player.changer_source_lecture('Web')
-        if 'Play.x' in request.form.keys():
+        elif 'Play.x' in request.form.keys():
             player.play(str(request.form['station']))
 
 def traitement_WEB():
@@ -93,7 +98,6 @@ def traitement_MP3():
         code_HTML_liste += '>' + nom_affichage + '</option>'
         index_fichier_MP3 += 1
     return code_HTML_liste
-
 
 def changer_source_musique(source):
     global liste_radios, liste_fichiers_MP3

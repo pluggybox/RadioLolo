@@ -1,6 +1,7 @@
 <!doctype html>
 
 <head>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" />
     <title>{{ nom_de_la_page }} {{ mode_DEBUG }}</title>
 
@@ -15,17 +16,10 @@
         <form id="myForm" name="myForm" role="form" method='POST' action='/'>
             <input type="image" name="Bouton_WEB" src={{image_WEB}}>
             <input type="image" name="Bouton_MP3" src={{image_MP3}}>
+            <input type="image" name="Play" src='/static/play.jpg'>
             <br>
             <br>
-
-            <table>
-                <tr>
-                    <td><select name='station'>{{ liste_stations|safe }}"></select></td>
-                    <td><input type="image" name="Play" src='/static/play.jpg'></td>
-                </tr>
-            </table>
-
-
+            <select name='station'>{{ liste_stations|safe }}"></select>
             <br>
             <br>
             <input type="submit" name="appui_bouton" value="-" /> <div name="volume" id="volume" style="display:inline">{{ volume }}</div>
@@ -33,13 +27,24 @@
             <input type="submit" name="changer_volume" id="changer_volume" value="changer_volume" style="font: 0px 'arial narrow', arial, sans-serif; padding: 0; border: none; background: none;"/>
             <br>
             <br>
+
+            <!-- -------------------------------------------------------------------------------------------------------
+             Le Remplacement de cette DIV par le bouton est fait dans le fichier /static/BoutonVolume/js/script.js
+             Les évenement de mouvement sont personnalisés dans le fichier /static/BoutonVolume/knobKnob/knobKnob.jquery.js
+            -------------------------------------------------------------------------------------------------------  -->
             <div id="control"></div>
+
             <br>
             <br>
             <input type="submit" name="appui_bouton" value="Sauver les paramètres" />
         </form>
     </center>
 
+
+    <script>
+        // Cette variable globale sert dans le fichier /static/BoutonVolume/js/script.js pour afficher le bouton avec la bonne position de départ
+        var VALEUR_DEPART_BOUTON = {{ valeur_du_bouton }} * 3.6;
+    </script>
 	<script src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script src="/static/Bouton_Volume/knobKnob/transform.js"></script>
 	<script src="/static/Bouton_Volume/knobKnob/knobKnob.jquery.js"></script>
