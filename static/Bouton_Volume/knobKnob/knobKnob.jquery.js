@@ -13,6 +13,10 @@ $(function(){
 
 });
 
+
+var ANGLE_MIN = 10.0;
+var ANGLE_MAX = 350.0;
+
 (function($){
 	
 	$.fn.knobKnob = function(props){
@@ -34,9 +38,8 @@ $(function(){
 			var knob = $('.knob',el),
 				knobTop = knob.find('.top'),
 				startDeg = -1,
-				currentDeg = 0,
-				rotation = 0,
-				lastDeg = 0,
+				currentDeg = ANGLE_MIN,
+				rotation = ANGLE_MIN,
 				doc = $(document);
 			
 			if(options.value > 0 && options.value <= 359){
@@ -63,7 +66,7 @@ $(function(){
 					a = center.y - e.pageY;
 					b = center.x - e.pageX;
 					deg = Math.atan2(a,b)*rad2deg;
-					
+
 					// we have to make sure that negative
 					// angles are turned into positive:
 					if(deg<0){
@@ -77,32 +80,25 @@ $(function(){
 					
 					// Calculating the current rotation
 					tmp = Math.floor((deg-startDeg) + rotation);
-					
-					// Making sure the current rotation
-					// stays between 0 and 359
-					if(tmp < 0){
-						tmp = 360 + tmp;
-					}
-					else if(tmp > 359){
-						tmp = tmp % 360;
-					}
+                    if(tmp < ANGLE_MIN)
+                    {
+                    	tmp = ANGLE_MIN;
+                    }
+                    if(tmp > ANGLE_MAX)
+                    {
+                    	tmp = ANGLE_MAX;
+                    }
 
 					// This would suggest we are at an end position;
 					// we need to block further rotation.
-					if(Math.abs(tmp - lastDeg) > 180){
+					if(Math.abs(tmp - currentDeg) > 180){
 						return false;
 					}
-					
-					currentDeg = tmp;
-					lastDeg = tmp;
 
-                    console.log("startDeg: " + startDeg);
-                    console.log("rotation: " + rotation);
-					console.log("currentDeg: " + currentDeg);
-		
+					currentDeg = tmp;
 					knobTop.css('transform','rotate('+(currentDeg)+'deg)');
 
-					document.getElementById("volume").innerHTML = Math.round((100*currentDeg)/359.0) +'%';
+					document.getElementById("volume").innerHTML = Math.round((100*(currentDeg - ANGLE_MIN))/(ANGLE_MAX - ANGLE_MIN)) +'%';
 				});
 			
 				doc.on('mouseup.rem  touchend.rem',function(){
@@ -110,13 +106,13 @@ $(function(){
 					doc.off('.rem');
 					
 					// Saving the current rotation
-					rotation = currentDeg;
+					rotation = currentDeg - ANGLE_MIN;
 					
 					// Marking the starting degree as invalid
 					startDeg = -1;
 
 					//document.getElementById("myForm").submit();
-					document.getElementById("changer_volume").value = Math.round((100*currentDeg)/359.0);
+					document.getElementById("changer_volume").value = Math.round((100*(currentDeg - ANGLE_MIN))/(ANGLE_MAX - ANGLE_MIN));
 					document.getElementById("changer_volume").click()
 				});
 			

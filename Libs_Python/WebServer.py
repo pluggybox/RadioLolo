@@ -35,7 +35,7 @@ def _HTTP_services():
         str_mode_debug = '(DEBUG)'
 
     return render_template('index.html', nom_de_la_page=SERVER_NAME, liste_stations=code_HTML_liste.strip(),
-                           volume='Volume: %d%%' % (player.lire_volume()),
+                           volume='%d%%' % (player.lire_volume()),
                            mode_DEBUG=str_mode_debug,
                            image_WEB=image_WEB,
                            image_MP3=image_MP3,

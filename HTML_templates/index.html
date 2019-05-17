@@ -29,8 +29,8 @@
             <br>
 
             <!-- -------------------------------------------------------------------------------------------------------
-             Le Remplacement de cette DIV par le bouton est fait dans le fichier /static/BoutonVolume/js/script.js
-             Les évenement de mouvement sont personnalisés dans le fichier /static/BoutonVolume/knobKnob/knobKnob.jquery.js
+             Le Remplacement de cette DIV par le bouton est fait dans le fichier /static/BoutonVolume/knobKnob/knobKnob.jquery.js
+             Les évenement de mouvement sont personnalisés dans le même fichier.
             -------------------------------------------------------------------------------------------------------  -->
             <div id="control"></div>
 
@@ -42,11 +42,10 @@
 
 
     <script>
-        // Cette variable globale sert dans le fichier /static/BoutonVolume/js/script.js pour afficher le bouton avec la bonne position de départ
-        var VALEUR_DEPART_BOUTON = {{ valeur_du_bouton }} * 3.6;
+        // Cette variable globale sert dans le fichier /static/BoutonVolume/knobKnob/knobKnob.jquery.js pour afficher le bouton avec la bonne position de départ
+        var VALEUR_DEPART_BOUTON = Math.round(({{ valeur_du_bouton }} * 3.4)) + 10.0; // l'amplitude est [10.0°; 350.0°] donc 340.0° (voir /static/BoutonVolume/knobKnob/knobKnob.jquery.js
     </script>
 	<script src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script src="/static/Bouton_Volume/knobKnob/knobKnob.jquery.js"></script>
-	<script src="/static/Bouton_Volume/js/script.js"></script>
 
 </body>
