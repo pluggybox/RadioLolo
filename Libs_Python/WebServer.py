@@ -57,6 +57,7 @@ def traitement_source():
 
 def traitement_methode_POST():
     if request.method == 'POST':
+        print request.form.keys()
         if 'changer_volume' in request.form.keys():
             player.changer_volume(request.form['changer_volume'])
 
