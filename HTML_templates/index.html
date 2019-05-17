@@ -13,20 +13,18 @@
     <center>
         <h1>{{ nom_de_la_page }} {{ mode_DEBUG }}</h1>
 
-        <form id="myForm" name="myForm" role="form" method='POST' action='/'>
+        <id="myForm" name="myForm" role="form" method='POST' action='/'>
+            <input type="image" name="Save" src='/static/save.jpg'>
+            <br>
             <input type="image" name="Bouton_WEB" src={{image_WEB}}>
             <input type="image" name="Bouton_MP3" src={{image_MP3}}>
             <input type="image" name="Play" src='/static/play.jpg'>
             <br>
-            <br>
             <select name='station'>{{ liste_stations|safe }}"></select>
             <br>
             <br>
-            <input type="submit" name="appui_bouton" value="-" /> <div name="volume" id="volume" style="display:inline">{{ volume }}</div>
-            <input type="submit" name="appui_bouton" value="+" />
+            <B><div name="volume" id="volume" style="font: 200px 'arial narrow', display:inline">{{ volume }}</div></B>
             <input type="submit" name="changer_volume" id="changer_volume" value="changer_volume" style="font: 0px 'arial narrow', arial, sans-serif; padding: 0; border: none; background: none;"/>
-            <br>
-            <br>
 
             <!-- -------------------------------------------------------------------------------------------------------
              Le Remplacement de cette DIV par le bouton est fait dans le fichier /static/BoutonVolume/knobKnob/knobKnob.jquery.js
@@ -34,9 +32,6 @@
             -------------------------------------------------------------------------------------------------------  -->
             <div id="control"></div>
 
-            <br>
-            <br>
-            <input type="submit" name="appui_bouton" value="Sauver les paramètres" />
         </form>
     </center>
 

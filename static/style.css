@@ -1,21 +1,16 @@
 body
 {
     font-family:verdana, sans-serif;
-    font-size:150%;
+    font-size:400%;
     color:#2B70EF
 }
 
 h1
 {
-  font-size: 100px;
-}
-
-input[type="submit"]
-{
-  font-size: 40px;
+  font-size: 150px;
 }
 
 select
 {
-  font-size: 40px;
+  font-size: 60px;
 }

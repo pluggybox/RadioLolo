@@ -57,25 +57,22 @@ def traitement_source():
 
 def traitement_methode_POST():
     if request.method == 'POST':
-        if 'appui_bouton' in request.form.keys():
-            if request.form['appui_bouton'] == '+':
-                player.modifier_volume(5)
-            elif request.form['appui_bouton'] == '-':
-                player.modifier_volume(-5)
-            elif request.form['appui_bouton'] == u"Sauver les paramètres":
-                player.sauver_parametres()
-
-        elif 'changer_volume' in request.form.keys():
+        if 'changer_volume' in request.form.keys():
             player.changer_volume(request.form['changer_volume'])
 
         elif 'Bouton_MP3.x' in request.form.keys():
             changer_source_musique('MP3')
             player.changer_source_lecture('MP3')
+
         elif 'Bouton_WEB.x' in request.form.keys():
             changer_source_musique('Web')
             player.changer_source_lecture('Web')
+
         elif 'Play.x' in request.form.keys():
             player.play(str(request.form['station']))
+
+        elif 'Save.x' in request.form.keys():
+            player.sauver_parametres()
 
 def traitement_WEB():
     code_HTML_liste = ''

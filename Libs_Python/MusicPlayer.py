@@ -86,3 +86,4 @@ class MusicPlayer():
 
     def sauver_parametres(self):
         self.fichier_parametres.ecrire(self.parametres)
+        print 'save'
