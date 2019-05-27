@@ -79,7 +79,7 @@ def traitement_WEB():
     code_HTML_liste = ''
     index_radio = 0
     for nom_radio, url_radio in liste_radios.radios():
-        code_HTML_liste += '<option valeur_du_codeur="' + str(index_radio) + '" '
+        code_HTML_liste += '<option value="' + str(index_radio) + '" '
         if (index_radio == player.index_lecture()):
             code_HTML_liste += 'selected="selected"'
         code_HTML_liste += '>' + nom_radio + '</option>'
@@ -90,7 +90,7 @@ def traitement_MP3():
     code_HTML_liste = ''
     index_fichier_MP3 = 0
     for nom_acces, nom_affichage in liste_fichiers_MP3:
-        code_HTML_liste += '<option valeur_du_codeur="' + str(index_fichier_MP3) + '" '
+        code_HTML_liste += '<option value="' + str(index_fichier_MP3) + '" '
         if (index_fichier_MP3 == player.index_lecture()):
             code_HTML_liste += 'selected="selected"'
         code_HTML_liste += '>' + nom_affichage + '</option>'

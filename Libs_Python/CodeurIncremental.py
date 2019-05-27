@@ -7,7 +7,8 @@ else:
     from CodeurIncremental_Windows import CodeurIncremental_Windows as Codeur
 
 class CodeurIncremental():
-    def __init__(self, val_min, val_max, increment=1):
+    def __init__(self, val_min, val_max, increment=1, callback_nouvelle_valeur=None):
+        self.callback_nouvelle_valeur = callback_nouvelle_valeur
         self.val_min = val_min
         self.val_max = val_max
         self.increment = increment
@@ -17,10 +18,14 @@ class CodeurIncremental():
     def callback_increment_sens_positif(self):
         self.valeur_du_codeur += self.increment
         self._saturer_valeur()
+        if self.callback_nouvelle_valeur != None:
+            self.callback_nouvelle_valeur(self.valeur_du_codeur)
 
     def callback_increment_sens_negatif(self):
         self.valeur_du_codeur -= self.increment
         self._saturer_valeur()
+        if self.callback_nouvelle_valeur != None:
+            self.callback_nouvelle_valeur(self.valeur_du_codeur)
 
     def _saturer_valeur(self):
         if(self.valeur_du_codeur < self.val_min):
