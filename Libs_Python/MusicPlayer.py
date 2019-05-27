@@ -3,6 +3,7 @@ import os
 import subprocess
 import platform
 from PersistantParameters import PersistantParameters, CLE_INDEX_RADIO, CLE_VOLUME, CLE_SOURCE
+from CodeurIncremental import Codeur_Incremental
 
 #=======================================================================================================================
 #                           C O N S T A N T E S
@@ -23,6 +24,7 @@ class MusicPlayer():
     def __init__(self):
         self.fichier_parametres = PersistantParameters(PARAMETER_FILE)
         self.parametres = self.fichier_parametres.lire()
+        self.codeur = Codeur_Incremental(0, 100, increment=5)
         self.clear()
         self.volume = self.parametres[CLE_VOLUME]
         self._run_command(['volume', str(self.volume)])
