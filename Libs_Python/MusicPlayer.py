@@ -28,10 +28,10 @@ class MusicPlayer():
         self.clear()
         self.volume = self.parametres[CLE_VOLUME]
         self._run_command(['volume', str(self.volume)])
+        self.codeur.forcer_valeur(self.volume)
 
     def _run_command(self, command):
         cmd = [MPC_COMMAND] + command
-        print 'cmd: ', cmd
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
         return p.stdout.read()
 
@@ -42,7 +42,6 @@ class MusicPlayer():
         self._run_command(['clear'])
 
     def play(self, index_radio):
-        print 'index_radio: ', index_radio
         self.parametres[CLE_INDEX_RADIO] = int(index_radio)
         numero_radio = int(index_radio) + 1
         self._run_command(['play', str(numero_radio)])
@@ -88,7 +87,6 @@ class MusicPlayer():
 
     def sauver_parametres(self):
         self.fichier_parametres.ecrire(self.parametres)
-        print 'save'
 
     def nouvelle_valeur_du_codeur(self, valeur_du_codeur):
         self.changer_volume(valeur_du_codeur)

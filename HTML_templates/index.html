@@ -7,18 +7,17 @@
 
     <link rel="stylesheet" href="/static/Bouton_Volume/knobKnob/knobKnob.css" />
 
-    <meta http-equiv="refresh" content="2">
+    <meta http-equiv="refresh" content="5">
 </head>
 
 <body>
     <center>
         <B>{{ nom_de_la_page }} {{ mode_DEBUG }}</B>
         <Form id="myForm" name="myForm" role="form" method='POST' action='/'>
-            <input type="image" name="Save" src='/static/save.jpg'>
-            <br>
             <input type="image" name="Bouton_WEB" src={{image_WEB}}>
             <input type="image" name="Bouton_MP3" src={{image_MP3}}>
-            <input type="image" id="Play" name="Play" src='/static/play.jpg'>
+            <input type="image" name="Save" src='/static/save.jpg'>
+            <!-- <input type="image" id="Play" name="Play" src='/static/play.jpg'> -->
             <br>
             <select id='station' name='station' onchange="document.getElementById('Play').click()">{{ liste_stations|safe }}"></select>
 
