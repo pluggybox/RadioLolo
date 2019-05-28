@@ -19,7 +19,7 @@ class Bouton_2_etats_RaspberryPi():
         GPIO.cleanup()
 
     def _changement_etat_bouton(self, numero_broche):
-        if (GPIO.input(NUMERO_BROCHE_CHANNEL_B) == 0):
+        if (GPIO.input(NUMERO_BROCHE) == 0):
             self.callback_changement_etat_bouton(False)
         else:
             self.callback_changement_etat_bouton(True)

@@ -94,4 +94,7 @@ class MusicPlayer():
         self.changer_volume(valeur_du_codeur)
 
     def nouvel_etat_du_bouton_source(self, etat):
-        print etat
+        if etat is True:
+            self.changer_source_lecture('Web')
+        else:
+            self.changer_source_lecture('MP3')
