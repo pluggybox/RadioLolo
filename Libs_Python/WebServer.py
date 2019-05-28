@@ -55,7 +55,6 @@ def traitement_source():
 
 def traitement_methode_POST():
     if request.method == 'POST':
-        print request.form.keys()
         if 'changer_volume' in request.form.keys():
             player.changer_volume(request.form['changer_volume'])
 
@@ -65,7 +64,7 @@ def traitement_methode_POST():
         elif 'Bouton_WEB.x' in request.form.keys():
             player.changer_source_lecture('Web')
 
-        elif 'Play.x' in request.form.keys():
+        elif 'Play' in request.form.keys():
             player.play(str(request.form['station']))
 
         elif 'Save.x' in request.form.keys():

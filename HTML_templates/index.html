@@ -17,7 +17,7 @@
             <input type="image" name="Bouton_WEB" src={{image_WEB}}>
             <input type="image" name="Bouton_MP3" src={{image_MP3}}>
             <input type="image" name="Save" src='/static/save.jpg'>
-            <!-- <input type="image" id="Play" name="Play" src='/static/play.jpg'> -->
+            <input type="submit" id="Play" name="Play" style="font: 0px 'arial narrow', arial, sans-serif; padding: 0; border: none; background: none;">
             <br>
             <select id='station' name='station' onchange="document.getElementById('Play').click()">{{ liste_stations|safe }}"></select>
 
