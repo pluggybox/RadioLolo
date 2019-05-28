@@ -4,7 +4,8 @@ import subprocess
 import platform
 from PersistantParameters import PersistantParameters, CLE_INDEX_RADIO, CLE_VOLUME, CLE_SOURCE
 from CodeurIncremental import CodeurIncremental
-from Bouton_2_etats import Bouton_2_etats
+from Bouton_Source import Bouton_Source
+from Bouton_Precedent_Suivant import Bouton_Precedent_Suivant
 from Libs_Python.ListManager import ListManager
 
 #=======================================================================================================================
@@ -29,7 +30,8 @@ class MusicPlayer():
         self.fichier_parametres = PersistantParameters(PARAMETER_FILE)
         self.parametres = self.fichier_parametres.lire()
         self.bouton_volume = CodeurIncremental(0, 100, increment=5, callback_nouvelle_valeur=self.nouvelle_valeur_du_codeur)
-        self.bouton_source = Bouton_2_etats(self.nouvel_etat_du_bouton_source)
+        self.bouton_source = Bouton_Source(self.nouvel_etat_du_bouton_source)
+        self.bouton_precedent_suivant = Bouton_Precedent_Suivant(self.nouvel_etat_du_bouton_precedent_suivant)
         self.clear()
         self.volume = self.parametres[CLE_VOLUME]
         self._run_command(['volume', str(self.volume)])
@@ -120,3 +122,18 @@ class MusicPlayer():
 
     def lire_liste_en_cours(self):
         return self.liste_en_cours
+
+    def nouvel_etat_du_bouton_precedent_suivant(self, etat):
+        index_lecture = self.index_lecture()
+
+        if etat == '+':
+            index_lecture += 1
+            if(index_lecture >= len(self.liste_en_cours) ):
+                index_lecture = 0
+
+        if etat == '-':
+            index_lecture -= 1
+            if(index_lecture < 0 ):
+                index_lecture = len(self.liste_en_cours) - 1
+
+        self.play(index_lecture)

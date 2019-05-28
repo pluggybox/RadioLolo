@@ -8,7 +8,7 @@ import RPi.GPIO as GPIO
 NUMERO_BROCHE = 13
 
 #=======================================================================================================================
-class Bouton_2_etats_RaspberryPi():
+class Bouton_Source_RaspberryPi():
     def __init__(self, callback_changement_etat_bouton):
         self.callback_changement_etat_bouton = callback_changement_etat_bouton
         GPIO.setmode(GPIO.BCM)
