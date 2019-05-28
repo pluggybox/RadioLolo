@@ -5,9 +5,8 @@ from threading import Thread
 #=======================================================================================================================
 #                           C O N S T A N T E S
 #=======================================================================================================================
-LARGEUR_FENETRE = 200
+LARGEUR_FENETRE = 300
 HAUTEUR_FENETRE = 100
-
 
 _callback_increment_sens_positif = None
 _callback_increment_sens_negatif = None
@@ -22,10 +21,17 @@ class IHM(wx.Frame):
 
         self.creer_bouton_moins(self.conteneur_principal)
         self.creer_bouton_plus(self.conteneur_principal)
-
+        self.creer_bouton_source(self.conteneur_principal)
 
         self.panel.SetSizer(self.conteneur_principal)
         self.Center()
+
+    def creer_bouton_source(self, conteneur):
+        self.bouton_ON = wx.RadioButton(self.panel, label="ON", style = wx.RB_GROUP)
+        self.bouton_OFF = wx.RadioButton(self.panel, label="OFF")
+        conteneur.Add(self.bouton_ON, flag=wx.RIGHT, border=8)
+        conteneur.Add(self.bouton_OFF, flag=wx.RIGHT, border=8)
+        #self.Bind(wx.EVT_RADIOBUTTON, self.echange.lire_callback_nouvel_etat_bouton())
 
     def creer_bouton_plus(self, conteneur):
         self.bouton_plus = wx.Button(self.panel, label='+')
@@ -52,7 +58,7 @@ class MonApplication(wx.App):
         return True
 
 #=======================================================================================================================
-class ThreadLectureClavier(Thread):
+class ThreadLectureIHM(Thread):
     def __init__(self):
         Thread.__init__(self)
 
@@ -66,5 +72,5 @@ class CodeurIncremental_Windows():
         global _callback_increment_sens_positif, _callback_increment_sens_negatif
         _callback_increment_sens_positif = callback_increment_sens_positif
         _callback_increment_sens_negatif = callback_increment_sens_negatif
-        self.thread_LectureClavier = ThreadLectureClavier()
-        self.thread_LectureClavier.start()
+        self.thread_LectureIHM = ThreadLectureIHM()
+        self.thread_LectureIHM.start()

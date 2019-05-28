@@ -4,6 +4,7 @@ import subprocess
 import platform
 from PersistantParameters import PersistantParameters, CLE_INDEX_RADIO, CLE_VOLUME, CLE_SOURCE
 from CodeurIncremental import CodeurIncremental
+from Bouton_2_etats import Bouton_2_etats
 
 #=======================================================================================================================
 #                           C O N S T A N T E S
@@ -24,11 +25,12 @@ class MusicPlayer():
     def __init__(self):
         self.fichier_parametres = PersistantParameters(PARAMETER_FILE)
         self.parametres = self.fichier_parametres.lire()
-        self.codeur = CodeurIncremental(0, 100, increment=5, callback_nouvelle_valeur=self.nouvelle_valeur_du_codeur)
+        self.bouton_volume = CodeurIncremental(0, 100, increment=5, callback_nouvelle_valeur=self.nouvelle_valeur_du_codeur)
+        self.bouton_source = Bouton_2_etats(self.nouvel_etat_du_bouton_source)
         self.clear()
         self.volume = self.parametres[CLE_VOLUME]
         self._run_command(['volume', str(self.volume)])
-        self.codeur.forcer_valeur(self.volume)
+        self.bouton_volume.forcer_valeur(self.volume)
 
     def _run_command(self, command):
         cmd = [MPC_COMMAND] + command
@@ -90,3 +92,6 @@ class MusicPlayer():
 
     def nouvelle_valeur_du_codeur(self, valeur_du_codeur):
         self.changer_volume(valeur_du_codeur)
+
+    def nouvel_etat_du_bouton_source(self, etat):
+        print etat
