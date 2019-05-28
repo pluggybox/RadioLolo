@@ -22,8 +22,6 @@ else:
 
 app = Flask(SERVER_NAME, template_folder='HTML_templates')
 player = None
-liste_radios = None
-liste_fichiers_MP3 = None
 
 @app.route('/', methods=['GET', 'POST'])
 def _HTTP_services():
@@ -62,11 +60,9 @@ def traitement_methode_POST():
             player.changer_volume(request.form['changer_volume'])
 
         elif 'Bouton_MP3.x' in request.form.keys():
-            changer_source_musique('MP3')
             player.changer_source_lecture('MP3')
 
         elif 'Bouton_WEB.x' in request.form.keys():
-            changer_source_musique('Web')
             player.changer_source_lecture('Web')
 
         elif 'Play.x' in request.form.keys():
@@ -78,7 +74,7 @@ def traitement_methode_POST():
 def traitement_WEB():
     code_HTML_liste = ''
     index_radio = 0
-    for nom_radio, url_radio in liste_radios.radios():
+    for nom_radio, url_radio in player.lire_liste_en_cours():
         code_HTML_liste += '<option value="' + str(index_radio) + '" '
         if (index_radio == player.index_lecture()):
             code_HTML_liste += 'selected="selected"'
@@ -89,7 +85,7 @@ def traitement_WEB():
 def traitement_MP3():
     code_HTML_liste = ''
     index_fichier_MP3 = 0
-    for nom_acces, nom_affichage in liste_fichiers_MP3:
+    for nom_acces, nom_affichage in  player.lire_liste_en_cours():
         code_HTML_liste += '<option value="' + str(index_fichier_MP3) + '" '
         if (index_fichier_MP3 == player.index_lecture()):
             code_HTML_liste += 'selected="selected"'
@@ -97,26 +93,11 @@ def traitement_MP3():
         index_fichier_MP3 += 1
     return code_HTML_liste
 
-def changer_source_musique(source):
-    global liste_radios, liste_fichiers_MP3
-    player.clear()
-    if(source == 'Web'):
-        for nom_radio, url_radio in liste_radios.radios():
-            player.add(url_radio)
-    else:
-        for nom_acces, nom_affichage in liste_fichiers_MP3:
-            player.add('file://' + nom_acces)
-    player.play(0)
-
 #=======================================================================================================================
 class WebServer():
-    def __init__(self, musicPlayer, gestionnaire_liste_radios):
-        global player, liste_radios, liste_fichiers_MP3
+    def __init__(self, musicPlayer):
+        global player
         player = musicPlayer
-        liste_radios = gestionnaire_liste_radios
-        liste_fichiers_MP3 = player.liste_fichiers_MP3()
-        changer_source_musique(player.lire_source_lecture())
-        player.play(player.index_lecture())
 
     def run(self):
         app.run(host='0.0.0.0', port=SERVER_PORT, debug=MODE_DEBUG)

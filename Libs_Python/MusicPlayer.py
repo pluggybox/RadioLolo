@@ -5,6 +5,7 @@ import platform
 from PersistantParameters import PersistantParameters, CLE_INDEX_RADIO, CLE_VOLUME, CLE_SOURCE
 from CodeurIncremental import CodeurIncremental
 from Bouton_2_etats import Bouton_2_etats
+from Libs_Python.ListManager import ListManager
 
 #=======================================================================================================================
 #                           C O N S T A N T E S
@@ -13,10 +14,12 @@ if(platform.system() == 'Linux'):
     MPC_COMMAND = 'mpc'
     PARAMETER_FILE = '/mnt/clef_USB/parameters.cfg'
     DIR_MP3_FILES = '/mnt/clef_USB/MP3/'
+    LISTE_RADIOS = '/mnt/clef_USB/liste_radios.txt'
 else:
     MPC_COMMAND = 'mpc.bat'
     PARAMETER_FILE = r'C:\Users\Public\parameters.cfg'
     DIR_MP3_FILES = r'C:\Users\Public\MP3\\'
+    LISTE_RADIOS = r'C:\Users\Public\liste_radios.txt'
 
 #=======================================================================================================================
 
@@ -31,6 +34,12 @@ class MusicPlayer():
         self.volume = self.parametres[CLE_VOLUME]
         self._run_command(['volume', str(self.volume)])
         self.bouton_volume.forcer_valeur(self.volume)
+
+        gestionnaire_liste_radios = ListManager(LISTE_RADIOS)
+        self.liste_radios = gestionnaire_liste_radios.radios()
+        self.liste_fichiers_MP3 = self.liste_fichiers_MP3()
+        self.changer_source_lecture(self.lire_source_lecture())
+        self.play(self.index_lecture())
 
     def _run_command(self, command):
         cmd = [MPC_COMMAND] + command
@@ -75,6 +84,16 @@ class MusicPlayer():
 
     def changer_source_lecture(self, source):
         self.parametres[CLE_SOURCE] = source
+        self.clear()
+        if(source == 'Web'):
+            self.liste_en_cours = self.liste_radios
+            for nom_radio, url_radio in self.liste_en_cours:
+                self.add(url_radio)
+        else:
+            self.liste_en_cours = self.liste_fichiers_MP3
+            for nom_acces, nom_affichage in self.liste_fichiers_MP3:
+                self.add('file://' + nom_acces)
+        self.play(0)
 
     def liste_fichiers_MP3(self):
         liste_fichiers = []
@@ -98,3 +117,6 @@ class MusicPlayer():
             self.changer_source_lecture('Web')
         else:
             self.changer_source_lecture('MP3')
+
+    def lire_liste_en_cours(self):
+        return self.liste_en_cours
