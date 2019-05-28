@@ -6,7 +6,6 @@ if(platform.system() == 'Linux'):
 else:
     from Bouton_2_etats_Windows import Bouton_2_etats_Windows as Bouton
 
-
-    class Bouton_2_etats():
-        def __init__(self, callback_nouvel_etat_bouton):
-            bouton = Bouton(callback_nouvel_etat_bouton)
+class Bouton_2_etats():
+    def __init__(self, callback_nouvel_etat_bouton):
+        bouton = Bouton(callback_nouvel_etat_bouton)
