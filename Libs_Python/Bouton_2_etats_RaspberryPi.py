@@ -13,14 +13,13 @@ class Bouton_2_etats_RaspberryPi():
         self.callback_changement_etat_bouton = callback_changement_etat_bouton
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(NUMERO_BROCHE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(NUMERO_BROCHE, GPIO.RISING, callback=self._IT_appui, bouncetime=10)
-        GPIO.add_event_detect(NUMERO_BROCHE, GPIO.FALLING, callback=self._IT_relachement, bouncetime=10)
+        GPIO.add_event_detect(NUMERO_BROCHE, GPIO.BOTH, callback=self._changement_etat_bouton, bouncetime=10)
 
     def __del__(self):
         GPIO.cleanup()
 
-    def _IT_appui(self, numero_broche):
-        self.callback_changement_etat_bouton(True)
-
-    def _IT_relachement(self, numero_broche):
-        self.callback_changement_etat_bouton(False)
+    def _changement_etat_bouton(self, numero_broche):
+        if (GPIO.input(NUMERO_BROCHE_CHANNEL_B) == 0):
+            self.callback_changement_etat_bouton(False)
+        else:
+            self.callback_changement_etat_bouton(True)
