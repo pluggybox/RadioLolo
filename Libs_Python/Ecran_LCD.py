@@ -4,7 +4,7 @@ from threading import Thread, RLock
 from time import sleep
 
 if(platform.system() == 'Linux'):
-    from Ecran_LCD_RaspberryPi import Ecran_LCD_Linux as Bus_Ecran
+    from Ecran_LCD_RaspberryPi import Ecran_LCD_RaspberryPi as Bus_Ecran
 else:
     from Ecran_LCD_Windows import Ecran_LCD_Windows as Bus_Ecran
     
