@@ -6,7 +6,8 @@ from PersistantParameters import PersistantParameters, CLE_INDEX_RADIO, CLE_VOLU
 from CodeurIncremental import CodeurIncremental
 from Bouton_Source import Bouton_Source
 from Bouton_Precedent_Suivant import Bouton_Precedent_Suivant
-from Libs_Python.ListManager import ListManager
+from ListManager import ListManager
+from Ecran_LCD import Ecran_LCD
 
 #=======================================================================================================================
 #                           C O N S T A N T E S
@@ -32,6 +33,7 @@ class MusicPlayer():
         self.bouton_volume = CodeurIncremental(0, 100, increment=5, callback_nouvelle_valeur=self.nouvelle_valeur_du_codeur)
         self.bouton_source = Bouton_Source(self.nouvel_etat_du_bouton_source)
         self.bouton_precedent_suivant = Bouton_Precedent_Suivant(self.nouvel_etat_du_bouton_precedent_suivant)
+        self.ecran = Ecran_LCD()
         self.clear()
         self.volume = self.parametres[CLE_VOLUME]
         self._run_command(['volume', str(self.volume)])
@@ -41,7 +43,7 @@ class MusicPlayer():
         self.liste_radios = gestionnaire_liste_radios.radios()
         self.liste_fichiers_MP3 = self.liste_fichiers_MP3()
         self.changer_source_lecture(self.lire_source_lecture())
-        self.play(self.index_lecture())
+        self.play(0)
 
     def _run_command(self, command):
         cmd = [MPC_COMMAND] + command
@@ -56,8 +58,9 @@ class MusicPlayer():
 
     def play(self, index_radio):
         self.parametres[CLE_INDEX_RADIO] = int(index_radio)
-        numero_radio = int(index_radio) + 1
-        self._run_command(['play', str(numero_radio)])
+        self.index_lecture_en_cours = int(index_radio)
+        self._run_command(['play', str(self.index_lecture_en_cours + 1)])
+        self.mise_a_jour_ecran()
 
     def stop(self):
         self._run_command(['stop'])
@@ -72,11 +75,13 @@ class MusicPlayer():
         self._run_command(['volume', str_offset])
         self.volume = int(self._run_command(['volume']).split(':')[1].split('%')[0])
         self.parametres[CLE_VOLUME] = self.volume
+        self.mise_a_jour_ecran()
 
     def changer_volume(self, volume):
         self.volume = int(volume)
         self.parametres[CLE_VOLUME] = self.volume
         self._run_command(['volume', str(self.volume)])
+        self.mise_a_jour_ecran()
 
     def lire_volume(self):
         return self.volume
@@ -124,7 +129,7 @@ class MusicPlayer():
         return self.liste_en_cours
 
     def nouvel_etat_du_bouton_precedent_suivant(self, etat):
-        index_lecture = self.index_lecture()
+        index_lecture = self.index_lecture_en_cours
 
         if etat == '+':
             index_lecture += 1
@@ -137,3 +142,10 @@ class MusicPlayer():
                 index_lecture = len(self.liste_en_cours) - 1
 
         self.play(index_lecture)
+
+    def mise_a_jour_ecran(self):
+        self.ecran.clear()
+        titre = self.lire_source_lecture() + ': ' + self.lire_liste_en_cours()[self.index_lecture_en_cours][0].replace('\\', '').replace('/', '')
+        print titre
+        self.ecran.ecrire(titre)
+        self.ecran.ecrire('Volume: %d%%'%(self.volume), 3, 1)
