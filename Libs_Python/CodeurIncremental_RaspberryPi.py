@@ -6,6 +6,7 @@ import RPi.GPIO as GPIO
 #=======================================================================================================================
 NUMERO_BROCHE_CHANNEL_A = 19
 NUMERO_BROCHE_CHANNEL_B = 26
+FILTRE_ANTI_REBONDS     = 100
 
 #=======================================================================================================================
 class CodeurIncremental_RaspberryPi():
@@ -15,7 +16,7 @@ class CodeurIncremental_RaspberryPi():
 
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(NUMERO_BROCHE_CHANNEL_A, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(NUMERO_BROCHE_CHANNEL_A, GPIO.RISING, callback=self._IT_channel_A, bouncetime=10)
+        GPIO.add_event_detect(NUMERO_BROCHE_CHANNEL_A, GPIO.RISING, callback=self._IT_channel_A, bouncetime=FILTRE_ANTI_REBONDS)
         GPIO.setup(NUMERO_BROCHE_CHANNEL_B, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
     def __del__(self):
